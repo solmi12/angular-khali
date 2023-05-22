@@ -14,7 +14,7 @@
 
   </div>
  <br><br> -->
-  <mat-card>
+  <mat-card   *ngIf="!submitted">
     <h1>عيد اضحى مبارك </h1>
 
     <mat-form-field style="width: 100%">
@@ -51,25 +51,38 @@
       </mat-error>
     </mat-form-field>
 
+
+    <mat-form-field style="width: 100%">
+      <input type="string" rows="4" cols="50" matInput placeholder="request" [formControl]="requestFormControl" />
+      <mat-error *ngIf="requestFormControl.hasError('minlength')">
+        request must be at least 4 characters long.
+      </mat-error>
+      <mat-error *ngIf="requestFormControl.hasError('required')">
+        request is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
     
 
     <button
-
+  
+    type="submit"
       mat-raised-button
       [disabled]="numberFormControl.invalid ||cityFormControl.invalid||nameFormControl.invalid || loading"
       color="primary"
-      (click)="register()"
+      (click)="onSubmit()"
       
-    type="submit"
+  
     >
       {{buttionText}}
     </button>
     
   </mat-card>
-  <div *ngIf="isSubmitted" class="thank-you-message">
-    Thank you for submitting the form!
-  </div>
+ 
 </form>
+<div *ngIf="submitted">
+  <h2>Thank you for your application!</h2>
+  <p>We appreciate your interest. We will get back to you soon.</p>
+</div>
 
 <!-- <button [routerLink]="['/profile', 12367]">Go to Profile</button> -->
 <br />

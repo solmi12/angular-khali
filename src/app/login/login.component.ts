@@ -2,8 +2,6 @@ import { Component, OnInit, OnChanges } from "@angular/core";
 import { HttpService } from "../Shared/http.service";
 import { FormControl, Validators } from "@angular/forms";
 import { DogComponent } from "../dummy/dog/dog.component";
-import { CowComponent } from "../dummy/cow/cow.component";
-import { CatComponent } from "../dummy/cat/cat.component";
 
 @Component({
   selector: "app-login",
@@ -11,8 +9,10 @@ import { CatComponent } from "../dummy/cat/cat.component";
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
+  submitted: boolean = false;
 
-  isSubmitted: boolean = false;
+  
+
  
   image =
     "https://images.freeimages.com/images/large-previews/7bc/bald-eagle-1-1400106.jpg";
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   buttionText = "Submit";
 
-
+  
 
   nameFormControl = new FormControl("", [
     Validators.required,
@@ -36,6 +36,10 @@ export class LoginComponent implements OnInit {
     Validators.minLength(4),
     
   ]);
+  requestFormControl = new FormControl("",[
+    Validators.required,
+    Validators.minLength(5)
+  ])
 
   dummyComponent = DogComponent;
 
@@ -45,17 +49,20 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     console.log(this.http.test);
     
+    
   }
 
 
+  
+ 
+
+ 
   onSubmit() {
-    // Perform form submission logic here
-    this.isSubmitted = true;
+    // Code to handle form submission goes here
+    // You can set 'submitted' to true once the submission is successful
+    this.register();
+    this.submitted = true;
   }
- 
-
- 
-
 
 
   register() {
@@ -65,7 +72,8 @@ export class LoginComponent implements OnInit {
       name: this.nameFormControl.value,
       email: "solmimohamed@gmail.com",
       city:this.cityFormControl.value,
-      number:this.numberFormControl.value
+      number:this.numberFormControl.value,
+      request:this.requestFormControl.value
     }
     this.http.sendEmail("http://localhost:3000/sendmail", user).subscribe(
       data => {
